@@ -8,6 +8,8 @@ Plug 'tpope/vim-surround'
 Plug 'bling/vim-airline'
 Plug 'itchyny/lightline.vim'
 Plug 'joshdick/onedark.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 "Backup and swap files
