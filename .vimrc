@@ -9,7 +9,7 @@ Plug 'tpope/vim-surround'
 Plug 'bling/vim-airline'
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'joshdick/onedark.vim'
+Plug 'dylanaraps/wal'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -39,7 +39,7 @@ if (has("termguicolors"))
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
-colorscheme onedark
+colorscheme wal
 
 "Spacing and tabs
 set backspace=indent,eol,start 	"Add this to your vimrc to make the backspace work like in most other programs
