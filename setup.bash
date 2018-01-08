@@ -1,24 +1,20 @@
 #/bin/bash
 
 # Varibles
-backup=~/dotfiles_backup
 dir=$(pwd)
-dotfiles=".vimrc .tmux.conf .vim"
 
-# Backup
-mkdir -p $backup
-echo "Backup dir: $backup"
+echo "Copying bspwm config"
+mkdir -p ~/.config/bspwm
+ln -s $dir/bspwm/bspwmrc ~/.config/bspwm --backup=existing
 
-# Move backups and create sym links
-for dotfile in $dotfiles; do
-	mv ~/$dotfile $backup
-	echo "Current $dotfile moved to: $backup"
-	ln -s $dir/$dotfile ~/$dotfile
-	echo "Symbloic link for $dotfile made in ~"
-done
+echo "Copying neovim config"
+mkdir -p ~/.config/nvim
+ln -s $dir/nvim/init.vim ~/.config/nvim --backup=existing
 
-# Dir for backup/swap files
-mkdir -p ~/.vim/.backup
-mkdir -p ~/.vim/.swap
-mkdir -p ~/.vim/.undo
-echo "Dirs made for backup/swap/undo files"
+echo "Copying polybar config"
+mkdir -p ~/.config/polybar
+ln -s $dir/polybar/config ~/.config/polybar --backup=existing
+
+echo "Copying sxhkd config"
+mkdir -p ~/.config/sxhkd
+ln -s $dir/sxhkd/sxhkdrc ~/.config/sxhkd --backup=existing
