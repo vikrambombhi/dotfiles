@@ -21,3 +21,7 @@ ln -s $dir/polybar/config ~/.config/polybar --backup=numbered
 echo "Copying sxhkd config"
 mkdir -p ~/.config/sxhkd
 ln -s $dir/sxhkd/sxhkdrc ~/.config/sxhkd --backup=numbered
+
+echo "Copying rofi config"
+mkdir -p ~/.config/rofi
+ln -s $dir/rofi/config ~/.config/rofi --backup=numbered
