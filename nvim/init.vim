@@ -29,5 +29,8 @@ let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
+"To map <Esc> to exit terminal-mode: >
+:tnoremap <Esc> <C-\><C-n>
+
 colorscheme nord
 set laststatus=2
