@@ -10,7 +10,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'raimondi/delimitmate'
 Plug 'arcticicestudio/nord-vim'
+Plug 'joshdick/onedark.vim'
 Plug 'python-mode/python-mode', {'branch': 'develop'}
+Plug 'leafgarland/typescript-vim'
+Plug 'w0rp/ale'
 call plug#end()
 
 "Backup and swap files
@@ -32,13 +35,35 @@ set nohlsearch    "Dont continue to highlight search results"
 " Quickfix to always open on bottom
 au FileType qf wincmd J
 
+"Map <Esc> to exit terminal-mode: >
+:tnoremap <Esc> <C-\><C-n>
+
+colorscheme onedark
+set laststatus=2
+
+
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-"To map <Esc> to exit terminal-mode: >
-:tnoremap <Esc> <C-\><C-n>
+"ALE
+let g:ale_fix_on_enter = 1
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+      \   'go': ['goimports', 'gofmt'],
+      \   'python': ['autopep8'],
+      \}
 
-colorscheme nord
-set laststatus=2
+"ripgrep
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
