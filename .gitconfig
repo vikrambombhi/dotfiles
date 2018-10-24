@@ -1,0 +1,5 @@
+[user]
+	email = vbombhi@gmail.com
+	name = vikrambombhi
+[url "git@github.com:"]
+	insteadOf = https://github.com/
