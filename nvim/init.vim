@@ -1,26 +1,26 @@
 call plug#begin()
-Plug 'pangloss/vim-javascript'
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'raimondi/delimitmate'
-Plug 'arcticicestudio/nord-vim'
-Plug 'joshdick/onedark.vim'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
-Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+" Edit surrounding braces/quotes/etc...
+Plug 'tpope/vim-surround'
+" Auto complete closing braces/quotes/etc...
+Plug 'raimondi/delimitmate'
+" Auto Complete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Linter
 Plug 'w0rp/ale'
+" Themes
+Plug 'joshdick/onedark.vim'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
-"Backup and swap files
+
 set undofile
-set backupdir=~/.config/nvim/.backup//          "Dir for vim to save backup files
-set directory=~/.config/nvim/.swap//            "Dir for vim to save swap files
-set undodir=~/.config/nvim/.undo//              "Undo dir for vim
 
 "Spacing and tabs
 set tabstop=2			"Existing tabs to be shown with 2 spaces
