@@ -1,8 +1,8 @@
 call plug#begin()
 "Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'pangloss/vim-javascript'
@@ -22,11 +22,13 @@ call plug#end()
 
 set undofile
 
-"Spacing and tabs
+" Spacing and tabs, tab == 2 spaces
 set tabstop=2			"Existing tabs to be shown with 2 spaces
 set shiftwidth=2		"Size of indent
 set softtabstop=2		"Backspace tab
 set expandtab			"Tabs to spaces
+" Use 4 spaces as tab for Java
+autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
 
 " Styling
 set cursorline    "highlight current line cusor is on"
