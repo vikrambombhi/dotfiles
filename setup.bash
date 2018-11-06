@@ -10,6 +10,8 @@ mkdir -p ~/dev/src/github.com
 
 echo "Installing neovim"
 apt install neovim
+echo "Installing vim plug for neovim"
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Setting up neovim, dont forget to install packages after this"
 mkdir ~/.config/nvim
 ln -s $dir/nvim.vim ~/.config/nvim --backup=simple
