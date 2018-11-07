@@ -9,17 +9,17 @@ echo "Creating dev folder using GOPATH structure"
 mkdir -p ~/dev/src/github.com
 
 echo "Adding neovim PPA"
-apt-add-repository -y ppa:neovim-ppa/stable
-apt update
+sudo apt-add-repository -y ppa:neovim-ppa/stable
+sudo apt update
 echo "Installing neovim"
-apt install neovim
+sudo apt install neovim
 echo "Installing python prerequisites for neovim"
-apt install python-dev python-pip python3-dev python3-pip
+sudo apt install python-dev python-pip python3-dev python3-pip
 echo "Installing vim plug for neovim"
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Setting up neovim, dont forget to install packages after this"
 mkdir ~/.config/nvim
-ln -s $dir/nvim.vim ~/.config/nvim --backup=simple
+ln -s $dir/nvim.vim ~/.config/nvim/init.vim --backup=simple
 
 echo "Installing libintput-gestures for trackpad gestures"
 git clone https://github.com/bulletmark/libinput-gestures.git ~/dev/src/github.com/
