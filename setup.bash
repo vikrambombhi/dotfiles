@@ -3,33 +3,56 @@
 # Varibles
 dir=$(pwd)
 
+# Create config and dev folders
 echo "Creating config folder"
 mkdir ~/.config
 echo "Creating dev folder using GOPATH structure"
 mkdir -p ~/dev/src/github.com
 
-echo "Adding neovim PPA"
-sudo apt-add-repository -y ppa:neovim-ppa/stable
-sudo apt update
-echo "Installing neovim"
-sudo apt install neovim
-echo "Installing python prerequisites for neovim"
-sudo apt install python-dev python-pip python3-dev python3-pip
-echo "Installing vim plug for neovim"
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-echo "Setting up neovim, dont forget to install packages after this"
-mkdir ~/.config/nvim
-ln -s $dir/nvim.vim ~/.config/nvim/init.vim --backup=simple
+# Install Golang if not already not installed
+if [ ! $(bash -c "command -v go") ]; then
+  echo "Golang not found installing it now"
+  apt install -y golang-go
 
-echo "Installing libintput-gestures for trackpad gestures"
-git clone https://github.com/bulletmark/libinput-gestures.git ~/dev/src/github.com/
-.~/dev/src/github.com/bulletmark/libinput-gestures-setup install
-echo "Setting up trackpad gestures"
-ln -s $dir/libinput-gestures.conf ~/.config/libinput-gestures.conf --backup=simple
-echo "Starting trackpad gestures service"
-libinput-gestures-setup autostart
-libinput-gestures-setup start
-echo "To stop geastures from autostarting use command 'libinput-gestures-setup autostop' "
+  echo "" >> ~/.bashrc
+  echo "Set GOPATH to custom path" >> ~/.bashrc
+  echo "export GOPATH=~/dev" >> ~/.bashrc
+fi
+
+# Install neovim not already installed
+if [ ! $(bash -c "command -v nvim") ]; then
+  # Install neovim
+  echo "Adding neovim PPA"
+  sudo apt-add-repository -y ppa:neovim-ppa/stable
+  sudo apt update
+  echo "Installing neovim"
+  sudo apt install neovim
+  echo "Installing python prerequisites for neovim"
+  sudo apt install python-dev python-pip python3-dev python3-pip
+
+  # Install vimplug
+  echo "Installing vimplug for neovim"
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+
+  # Set neovim config
+  echo "Setting up neovim, dont forget to install packages after this"
+  mkdir ~/.config/nvim
+  ln -s $dir/nvim.vim ~/.config/nvim/init.vim --backup=simple
+fi
+
+# Install libintput-geastures for trackpad geastures
+if [ ! $(bash -c "command -v libintput-geastures-setup") ]; then
+  echo "Installing libintput-gestures for trackpad gestures"
+  git clone https://github.com/bulletmark/libinput-gestures.git ~/dev/src/github.com/
+  .~/dev/src/github.com/bulletmark/libinput-gestures-setup install
+  echo "Setting up trackpad gestures"
+  ln -s $dir/libinput-gestures.conf ~/.config/libinput-gestures.conf --backup=simple
+  echo "Starting trackpad gestures service"
+  libinput-gestures-setup autostart
+  libinput-gestures-setup start
+  echo "To stop geastures from autostarting use command 'libinput-gestures-setup autostop' "
+fi
 
 echo "Setting up git config"
 ln -s $dir/gitconfig ~/.gitconfig --backup=simple
