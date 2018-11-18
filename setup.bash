@@ -12,10 +12,10 @@ mkdir -p ~/dev/src/github.com
 # Install Golang if not already not installed
 if [ ! $(bash -c "command -v go") ]; then
   echo "Golang not found installing it now"
-  apt install -y golang-go
+  sudo apt install -y golang-go
 
   echo "" >> ~/.bashrc
-  echo "Set GOPATH to custom path" >> ~/.bashrc
+  echo "# Set GOPATH to custom path" >> ~/.bashrc
   echo "export GOPATH=~/dev" >> ~/.bashrc
 fi
 
@@ -26,9 +26,9 @@ if [ ! $(bash -c "command -v nvim") ]; then
   sudo apt-add-repository -y ppa:neovim-ppa/stable
   sudo apt update
   echo "Installing neovim"
-  sudo apt install neovim
+  sudo apt install -y neovim
   echo "Installing python prerequisites for neovim"
-  sudo apt install python-dev python-pip python3-dev python3-pip
+  sudo apt install -y python-dev python-pip python3-dev python3-pip
 
   # Install vimplug
   echo "Installing vimplug for neovim"
@@ -43,8 +43,8 @@ fi
 
 # Install libintput-geastures for trackpad geastures
 if [ ! $(bash -c "command -v libintput-geastures-setup") ]; then
-  echo "Installing libintput-gestures for trackpad gestures"
-  git clone https://github.com/bulletmark/libinput-gestures.git ~/dev/src/github.com/
+  echo "Download libintput-gestures for trackpad gestures"
+  go get github.com/bulletmark/libinput-gestures
   .~/dev/src/github.com/bulletmark/libinput-gestures-setup install
   echo "Setting up trackpad gestures"
   ln -s $dir/libinput-gestures.conf ~/.config/libinput-gestures.conf --backup=simple
