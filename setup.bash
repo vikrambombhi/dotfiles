@@ -42,15 +42,26 @@ if [ ! $(bash -c "command -v nvim") ]; then
 fi
 
 # Install libintput-geastures for trackpad geastures
-if [ ! $(bash -c "command -v libintput-geastures-setup") ]; then
-  echo "Download libintput-gestures for trackpad gestures"
-  go get github.com/bulletmark/libinput-gestures
-  .~/dev/src/github.com/bulletmark/libinput-gestures-setup install
+if [ ! $(bash -c "command -v libinput-gestures") ]; then
+  # Install dependencies
+  sudo apt install -y xdotool wmctrl libinput-tools
+
   echo "Setting up trackpad gestures"
   ln -s $dir/libinput-gestures.conf ~/.config/libinput-gestures.conf --backup=simple
+
+  echo "Download libintput-gestures for trackpad gestures"
+  go get github.com/bulletmark/libinput-gestures
+  cd /home/vikram/dev/src/github.com/bulletmark/libinput-gestures
+  sudo ./libinput-gestures-setup install
+
+  echo "Adding user to input group"
+  sudo gpasswd -a $USER input
+
+
   echo "Starting trackpad gestures service"
   libinput-gestures-setup autostart
-  libinput-gestures-setup start
+
+  echo "Restart computer for geastures to take effect"
   echo "To stop geastures from autostarting use command 'libinput-gestures-setup autostop' "
 fi
 
