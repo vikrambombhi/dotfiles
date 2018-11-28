@@ -1,8 +1,10 @@
 call plug#begin()
 "Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
+" Install FZF system wide
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" FZF for vim
+Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'pangloss/vim-javascript'
@@ -68,4 +70,25 @@ let g:ale_fixers = {
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+"""KEY MAPPINGS"""
+"rg search
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+let g:rg_command = 'ripgrep.rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{.git/*,vendor/*}" --color "always" '
+command! -bang -nargs=* Find
+  \ call fzf#vim#grep(
+  \   g:rg_command .shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%'),
+  \   <bang>0)
+set grepprg=rg\ --vimgrep
+nnoremap <C-f> :Find<space><C-F>i
+vnoremap <C-f> y:Find<space><C-R>"<CR>
