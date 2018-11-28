@@ -17,6 +17,9 @@ if [ ! $(bash -c "command -v go") ]; then
   echo "" >> ~/.bashrc
   echo "# Set GOPATH to custom path" >> ~/.bashrc
   echo "export GOPATH=~/dev" >> ~/.bashrc
+
+  echo "# Add Go binaries to PATH" >> ~/.bashrc
+  echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
 fi
 
 # Install neovim not already installed
