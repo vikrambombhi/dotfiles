@@ -67,7 +67,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "ALE
 let g:ale_fix_on_enter = 1
 let g:ale_fix_on_save = 1
-let g:ale_elixir_elixir_ls_release = $HOME.'/.config/nvim/plugged/elixir-ls/rel'
+let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
 let g:ale_fixers = {
       \   'go': ['goimports', 'gofmt'],
       \   'python': ['autopep8'],
