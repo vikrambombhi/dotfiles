@@ -1,3 +1,13 @@
+function! InstallElixirLangServer(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !mkdir rel && yes | mix deps.get && yes | mix compile && mix elixir_ls.release -o rel
+  endif
+endfunction
+
 call plug#begin()
 "Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
@@ -5,9 +15,12 @@ Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " FZF for vim
 Plug 'junegunn/fzf.vim'
+" Language specific libraries
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'pangloss/vim-javascript'
+Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
+Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 " Edit surrounding braces/quotes/etc...
 Plug 'tpope/vim-surround'
 " Auto complete closing braces/quotes/etc...
@@ -21,7 +34,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
-
 set undofile
 
 " Spacing and tabs, tab == 2 spaces
@@ -29,6 +41,7 @@ set tabstop=2			"Existing tabs to be shown with 2 spaces
 set shiftwidth=2		"Size of indent
 set softtabstop=2		"Backspace tab
 set expandtab			"Tabs to spaces
+
 " Use 4 spaces as tab for Java
 autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
 
@@ -54,9 +67,11 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "ALE
 let g:ale_fix_on_enter = 1
 let g:ale_fix_on_save = 1
+let g:ale_elixir_elixir_ls_release = $HOME.'/.config/nvim/plugged/elixir-ls/rel'
 let g:ale_fixers = {
       \   'go': ['goimports', 'gofmt'],
       \   'python': ['autopep8'],
+      \   'elixir': ['mix_format'],
       \}
 
 "ripgrep
