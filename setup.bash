@@ -22,6 +22,16 @@ if [ ! $(bash -c "command -v go") ]; then
   echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
 fi
 
+# Install tmux not already installed
+if [ ! $(bash -c "command -v tmux") ]; then
+  echo "Installing tmux"
+  sudo apt install -y tmux
+
+  # Set neovim config
+  echo "Setting up tmux"
+  ln -s $dir/tmux.conf ~/.tmux.conf --backup=simple
+fi
+
 # Install neovim not already installed
 if [ ! $(bash -c "command -v nvim") ]; then
   # Install neovim
