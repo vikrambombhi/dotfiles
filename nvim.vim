@@ -20,7 +20,8 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'pangloss/vim-javascript'
 Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
-Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
+" Basic libraries for all(most) languages
+Plug 'sheerun/vim-polyglot'
 " Edit surrounding braces/quotes/etc...
 Plug 'tpope/vim-surround'
 " Auto complete closing braces/quotes/etc...
