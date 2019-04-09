@@ -9,6 +9,12 @@ mkdir ~/.config
 echo "Creating dev folder using GOPATH structure"
 mkdir -p ~/dev/src/github.com
 
+# Allows you to cd into directory with directory name only (dont need to type `cd`)
+echo "" >> ~/.bashrc
+echo "# auto cd with dir name alone" >> ~/.bashrc
+echo "shopt -s autocd" >> ~/.bashrc
+echo "" >> ~/.bashrc
+
 # Install Golang if not already not installed
 if [ ! $(bash -c "command -v go") ]; then
   echo "Golang not found installing it now"
