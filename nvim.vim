@@ -33,6 +33,7 @@ Plug 'w0rp/ale'
 " Themes
 Plug 'joshdick/onedark.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
 set undofile
@@ -56,7 +57,8 @@ au FileType qf wincmd J
 "Map <Esc> to exit terminal-mode: >
 :tnoremap <Esc> <C-\><C-n>
 
-colorscheme onedark
+colorscheme challenger_deep
+set termguicolors
 set laststatus=2
 
 
