@@ -41,6 +41,10 @@ let g:python3_host_prog = '/usr/bin/python'
 
 " Use system clipboard
 set clipboard=unnamed
+" dont override clipboard on paste
+" pastes and then immeditly yanks what was pasted
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
+xnoremap <expr> P 'Pgv"'.v:register.'y`>'
 
 set undofile
 
@@ -49,9 +53,6 @@ set tabstop=4			"Existing tabs to be shown with 2 spaces
 set shiftwidth=4		"Size of indent
 set softtabstop=4		"Backspace tab
 " set expandtab			"Tabs to spaces
-
-" Use 4 spaces as tab for Java
-autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab!
 
 " Styling
 set cursorline    "highlight current line cusor is on"
