@@ -19,7 +19,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'pangloss/vim-javascript'
-Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
+" Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
 " Basic libraries for all(most) languages
 Plug 'sheerun/vim-polyglot'
 " Edit surrounding braces/quotes/etc...
@@ -36,13 +36,19 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python'
+
+" Use system clipboard
+set clipboard=unnamed
+
 set undofile
 
 " Spacing and tabs, tab == 2 spaces
-set tabstop=2			"Existing tabs to be shown with 2 spaces
-set shiftwidth=2		"Size of indent
-set softtabstop=2		"Backspace tab
-set expandtab			"Tabs to spaces
+set tabstop=4			"Existing tabs to be shown with 2 spaces
+set shiftwidth=4		"Size of indent
+set softtabstop=4		"Backspace tab
+" set expandtab			"Tabs to spaces
 
 " Use 4 spaces as tab for Java
 autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab!
@@ -88,7 +94,7 @@ let g:ale_fixers = {
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-let g:rg_command = 'ripgrep.rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{.git/*,vendor/*}" --color "always" '
+let g:rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{.git/*,vendor/*}" --color "always" '
 command! -bang -nargs=* Find
   \ call fzf#vim#grep(
   \   g:rg_command .shellescape(<q-args>), 1,
