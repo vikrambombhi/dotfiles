@@ -1,33 +1,25 @@
-function! InstallElixirLangServer(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !mkdir rel && yes | mix deps.get && yes | mix compile && mix elixir_ls.release -o rel
-  endif
-endfunction
-
 call plug#begin()
-"Plug 'scrooloose/syntastic'
+Plug 'github/copilot.vim', { 'do': ':Copilot setup' }
+Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 " Install FZF system wide
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " FZF for vim
 Plug 'junegunn/fzf.vim'
+"
 " Language specific libraries
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-" Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
+"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+"Plug 'python-mode/python-mode', {'branch': 'develop'}
 " Basic libraries for all(most) languages
 Plug 'sheerun/vim-polyglot'
 " Edit surrounding braces/quotes/etc...
 Plug 'tpope/vim-surround'
 " Auto complete closing braces/quotes/etc...
-Plug 'raimondi/delimitmate'
+"Plug 'raimondi/delimitmate'
 " Auto Complete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Linter
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 
 " Project specific rules
 Plug 'editorconfig/editorconfig-vim'
@@ -37,8 +29,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
-let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '/usr/bin/python'
+"let g:python_host_prog = '/usr/bin/python'
+"let g:python3_host_prog = '/usr/bin/python'
 
 " Use system clipboard
 set clipboard=unnamed
@@ -53,7 +45,7 @@ set undofile
 set tabstop=4			"Existing tabs to be shown with 2 spaces
 set shiftwidth=4		"Size of indent
 set softtabstop=4		"Backspace tab
-" set expandtab			"Tabs to spaces
+set expandtab			"Tabs to spaces
 
 " Styling
 set cursorline    "highlight current line cusor is on"
@@ -71,20 +63,20 @@ set laststatus=2
 
 
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "ALE
-let g:ale_fix_on_save = 1
-" let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
-let g:ale_fixers = {
-      \   'go': ['goimports', 'gofmt'],
-      \   'python': ['autopep8'],
-      \   'elixir': ['mix_format'],
-	  \   'javascript': ['prettier'],
-	  \   'css': ['prettier'],
-      \}
+"let g:ale_fix_on_save = 1
+"" let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
+"let g:ale_fixers = {
+"      \   'go': ['goimports', 'gofmt'],
+"      \   'python': ['autopep8'],
+"      \   'elixir': ['mix_format'],
+"	  \   'javascript': ['prettier'],
+"	  \   'css': ['prettier'],
+"      \}
 
 """KEY MAPPINGS"""
 "ripgrep
