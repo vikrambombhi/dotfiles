@@ -17,8 +17,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Language specific libraries
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-Plug 'python-mode/python-mode', {'branch': 'develop'}
-Plug 'pangloss/vim-javascript'
 " Plug 'JakeBecker/elixir-ls', { 'do': function('InstallElixirLangServer')}
 " Basic libraries for all(most) languages
 Plug 'sheerun/vim-polyglot'
@@ -29,7 +27,10 @@ Plug 'raimondi/delimitmate'
 " Auto Complete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Linter
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+
+" Project specific rules
+Plug 'editorconfig/editorconfig-vim'
 " Themes
 Plug 'joshdick/onedark.vim'
 Plug 'arcticicestudio/nord-vim'
@@ -75,13 +76,14 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "ALE
-let g:ale_fix_on_enter = 1
 let g:ale_fix_on_save = 1
-let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
+" let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
 let g:ale_fixers = {
       \   'go': ['goimports', 'gofmt'],
       \   'python': ['autopep8'],
       \   'elixir': ['mix_format'],
+	  \   'javascript': ['prettier'],
+	  \   'css': ['prettier'],
       \}
 
 """KEY MAPPINGS"""
