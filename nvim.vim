@@ -8,7 +8,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "
 " Language specific libraries
-"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 "Plug 'python-mode/python-mode', {'branch': 'develop'}
 " Basic libraries for all(most) languages
 Plug 'sheerun/vim-polyglot'
@@ -36,7 +36,7 @@ call plug#end()
 "let g:python3_host_prog = '/usr/bin/python'
 
 " Use system clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 " dont override clipboard on paste
 " pastes and then immeditly yanks what was pasted
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
