@@ -20,6 +20,9 @@ Plug 'tpope/vim-surround'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Linter
 Plug 'dense-analysis/ale'
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'pantharshit00/vim-prisma'
 
 " Project specific rules
 Plug 'editorconfig/editorconfig-vim'
@@ -75,6 +78,13 @@ let g:ale_fixers = {
 	  \   'javascript': ['prettier'],
 	  \   'css': ['prettier'],
       \}
+
+" CoC
+" Use Enter to select auto complete
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+" Use tab and shift tab to navigate autocomplete options
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 """KEY MAPPINGS"""
 "ripgrep
