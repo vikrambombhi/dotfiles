@@ -87,7 +87,7 @@ let g:ale_fixers = {
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-let g:rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{.git/*,vendor/*}" --color "always" '
+let g:rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{node_modules/*,.git/*,vendor/*}" --color "always" '
 command! -bang -nargs=* Find
   \ call fzf#vim#grep(
   \   g:rg_command .shellescape(<q-args>), 1,
