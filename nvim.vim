@@ -27,8 +27,6 @@ Plug 'pantharshit00/vim-prisma'
 " Project specific rules
 Plug 'editorconfig/editorconfig-vim'
 " Themes
-Plug 'joshdick/onedark.vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
@@ -36,7 +34,8 @@ call plug#end()
 "let g:python3_host_prog = '/usr/bin/python'
 
 " Use system clipboard
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
+set clipboard+=unnamedplus
 " dont override clipboard on paste
 " pastes and then immeditly yanks what was pasted
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
@@ -53,6 +52,7 @@ set expandtab			"Tabs to spaces
 " Styling
 set cursorline    "highlight current line cusor is on"
 set nohlsearch    "Dont continue to highlight search results"
+set number       "Show line numbers"
 
 " Quickfix to always open on bottom
 au FileType qf wincmd J
