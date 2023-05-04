@@ -18,11 +18,15 @@ Plug 'tpope/vim-surround'
 "Plug 'raimondi/delimitmate'
 " Auto Complete
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Linter
+" Linter and Auto Complete (uses LSP)
 Plug 'dense-analysis/ale'
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pantharshit00/vim-prisma'
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'mfussenegger/nvim-dap-python'
 
 " Project specific rules
 Plug 'editorconfig/editorconfig-vim'
@@ -32,6 +36,7 @@ call plug#end()
 
 "let g:python_host_prog = '/usr/bin/python'
 "let g:python3_host_prog = '/usr/bin/python'
+let mapleader = "\<Space>"
 
 " Use system clipboard
 " set clipboard=unnamedplus
@@ -69,6 +74,12 @@ set laststatus=2
 "let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete
 "inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"
+
+" Dont use copolot for dap-repl
+let g:copilot_filetypes = {
+            \ 'dap-repl': v:false,
+            \ }
 
 "ALE
 let g:ale_fix_on_save = 1
@@ -82,9 +93,54 @@ let g:ale_fixers = {
 " CoC
 " Use Enter to select auto complete
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-" Use tab and shift tab to navigate autocomplete options
-inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
-inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+" Configure nvim-dap
+lua <<EOF
+vim.keymap.set('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>')
+vim.keymap.set('n', '<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+vim.keymap.set('n', '<leader>ds', '<cmd>lua require"dap".step_over()<CR>')
+vim.keymap.set('n', '<leader>di', '<cmd>lua require"dap".step_into()<CR>')
+vim.keymap.set('n', '<leader>do', '<cmd>lua require"dap".step_out()<CR>')
+vim.keymap.set('n', '<leader>dq', '<cmd>lua require"dap".disconnect()<CR>')
+-- nvim-dap-python
+require('dap-python').setup('python')
+-- nvim-dap-ui
+local dapui_config = {
+    layouts = {
+        {
+                elements = {
+                    {
+                            id = "scopes",
+                            size = 0.25,
+                    },
+                    { id = "breakpoints", size = 0.25 },
+                    { id = "stacks", size = 0.25 },
+                    { id = "watches", size = 0.25 },
+                },
+                size = 40,
+                position = "left",
+                },
+        {
+                elements = {
+                    "repl",
+                },
+                size = 10,
+                position = "bottom",
+        },
+        },
+}
+require('dapui').setup(dapui_config)
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+EOF
 
 """KEY MAPPINGS"""
 "ripgrep
