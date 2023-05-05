@@ -9,16 +9,10 @@ Plug 'junegunn/fzf.vim'
 "
 " Language specific libraries
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-"Plug 'python-mode/python-mode', {'branch': 'develop'}
 " Basic libraries for all(most) languages
 Plug 'sheerun/vim-polyglot'
 " Edit surrounding braces/quotes/etc...
 Plug 'tpope/vim-surround'
-" Auto complete closing braces/quotes/etc...
-"Plug 'raimondi/delimitmate'
-" Auto Complete
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 
 " LSP Support using lsp-zero
 Plug 'neovim/nvim-lspconfig'                           " Required
@@ -30,13 +24,6 @@ Plug 'hrsh7th/cmp-nvim-lsp' " Required
 Plug 'L3MON4D3/LuaSnip'     " Required
 
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
-
-
-"
-" Linter and Auto Complete (uses LSP)
-" Plug 'dense-analysis/ale'
-" " LSP
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
 
@@ -87,27 +74,10 @@ colorscheme challenger_deep
 set termguicolors
 set laststatus=2
 
-
-" Use deoplete.
-"let g:deoplete#enable_at_startup = 1
-" deoplete tab-complete
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"
-
 " Dont use copolot for dap-repl
 let g:copilot_filetypes = {
             \ 'dap-repl': v:false,
             \ }
-
-"ALE
-let g:ale_fix_on_save = 1
-"" let g:ale_elixir_elixir_ls_release = g:plug_home.'/elixir-ls/rel'
-let g:ale_fixers = {
-      \   'python': ['autopep8'],
-	  \   'javascript': ['prettier'],
-	  \   'css': ['prettier'],
-      \}
-
 
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
@@ -121,11 +91,6 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
 EOF
-
-
-" CoC
-" Use Enter to select auto complete
-inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 " Configure nvim-dap
 lua <<EOF
