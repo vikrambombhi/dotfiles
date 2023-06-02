@@ -46,6 +46,5 @@ if [ ! -f ~/.config/nvim/init.vim ]; then
 fi
 
 
-# Not sure if this is needed anymore
-# echo "Setting up git config"
-# ln -s $dir/gitconfig ~/.gitconfig --backup=simple
+echo "Setting up git config"
+ln -s $dir/gitconfig ~/.gitconfig
