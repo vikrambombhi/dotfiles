@@ -15,9 +15,9 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 
 " LSP Support using lsp-zero
-Plug 'neovim/nvim-lspconfig'                           " Required
 Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
 Plug 'williamboman/mason-lspconfig.nvim'               " Optional
+Plug 'neovim/nvim-lspconfig'                           " Required
 " Autocompletion
 Plug 'hrsh7th/nvim-cmp'     " Required
 Plug 'hrsh7th/cmp-nvim-lsp' " Required
@@ -25,7 +25,7 @@ Plug 'L3MON4D3/LuaSnip'     " Required
 
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
-
+Plug 'nvim-lua/plenary.nvim' " All the lua functions I don't want to write twice.
 
 Plug 'pantharshit00/vim-prisma'
 " Debugging
@@ -79,6 +79,7 @@ let g:copilot_filetypes = {
             \ 'dap-repl': v:false,
             \ }
 
+
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
 
@@ -88,6 +89,16 @@ end)
 
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+lsp.format_on_save({
+  format_opts = {
+    async = false,
+    timeout_ms = 10000,
+  },
+  servers = {
+    ['solargraph'] = { 'ruby' },
+  }
+})
 
 lsp.setup()
 EOF
