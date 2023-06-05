@@ -48,3 +48,7 @@ fi
 
 echo "Setting up git config"
 ln -s $dir/gitconfig ~/.gitconfig
+
+echo "Setting up alacrity"
+mkdir -p ~/.config/alacritty
+ln -s $dir/alacritty.yml ~/.config/alacritty/alacritty.yml
