@@ -41,8 +41,7 @@ curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --c
 # Set neovim config
 if [ ! -f ~/.config/nvim/init.vim ]; then
 	echo "Linking neovim config, dont forget to install packages after this"
-	mkdir -p ~/.config/nvim
-	ln -s $dir/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $dir/nvim/ ~/.config/nvim
 fi
 
 
