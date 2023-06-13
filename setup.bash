@@ -51,3 +51,11 @@ ln -s $dir/gitconfig ~/.gitconfig
 echo "Setting up alacrity"
 mkdir -p ~/.config/alacritty
 ln -s $dir/alacritty.yml ~/.config/alacritty/alacritty.yml
+
+if grep -Fxq "source $dir/dev.sh" "$HOME/.bashrc"; then
+    echo "Dev util already installed"
+else
+    echo "Setting up dev util"
+    echo "You will need to source ~/.bashrc after"
+    echo "source $dir/dev.sh" >> ~/.bashrc
+fi
