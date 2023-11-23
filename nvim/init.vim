@@ -1,6 +1,5 @@
 call plug#begin()
 " Plug 'github/copilot.vim', { 'do': ':Copilot setup' }
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive' " Git wrapper for vim
 Plug 'tpope/vim-rhubarb' " Fugitive-companion to interact with github, enables :Gbrowse
 Plug 'airblade/vim-gitgutter' " Show git diff in the sign column
@@ -30,7 +29,6 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
 Plug 'nvim-lua/plenary.nvim' " All the lua functions I don't want to write twice.
 
-Plug 'pantharshit00/vim-prisma'
 " Debugging
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
