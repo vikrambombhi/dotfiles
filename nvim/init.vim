@@ -38,6 +38,8 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+
 " Project specific rules
 Plug 'editorconfig/editorconfig-vim'
 " Themes
