@@ -161,25 +161,3 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 EOF
-
-"""KEY MAPPINGS"""
-"ripgrep
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-let g:rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!{node_modules/*,.git/*,vendor/*}" --color "always" '
-command! -bang -nargs=* Find
-  \ call fzf#vim#grep(
-  \   g:rg_command .shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%'),
-  \   <bang>0)
-set grepprg=rg\ --vimgrep
-nnoremap <C-f> :Find<space><C-F>i
-vnoremap <C-f> y:Find<space><C-R>"<CR>
