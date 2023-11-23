@@ -42,6 +42,11 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'editorconfig/editorconfig-vim'
 " Themes
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'rose-pine/neovim', { 'as': 'rose-pine' }
+
+Plug 'lukas-reineke/indent-blankline.nvim' " Vertical lines showing indentation
+Plug 'junegunn/goyo.vim' " Distraction free writing
 call plug#end()
 
 "let g:python_host_prog = '/usr/bin/python'
@@ -69,13 +74,15 @@ set cursorline    "highlight current line cusor is on"
 set nohlsearch    "Dont continue to highlight search results"
 set number       "Show line numbers"
 
+let g:goyo_width = 200
+
 " Quickfix to always open on bottom
 au FileType qf wincmd J
 
 "Map <Esc> to exit terminal-mode: >
 :tnoremap <Esc> <C-\><C-n>
 
-colorscheme challenger_deep
+colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 set termguicolors
 set laststatus=2
 
