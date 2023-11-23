@@ -11,7 +11,9 @@ function dev() {
 
     # if directory exists
     if [ -d $DIR_PATH ]; then
-        # tmux new -A -s $dir_name -c "~/dev/$dir_name"
+        # -c sets the working directory
+        # -A attaches to the session if it already exists
+        # -s sets the session name
         tmux new -c $DIR_PATH -A -s $DIR_NAME 
     else
         echo "$DIR_PATH does not exist"
