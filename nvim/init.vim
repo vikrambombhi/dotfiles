@@ -3,12 +3,9 @@ Plug 'github/copilot.vim', { 'do': ':Copilot setup' }
 Plug 'tpope/vim-fugitive' " Git wrapper for vim
 Plug 'tpope/vim-rhubarb' " Fugitive-companion to interact with github, enables :Gbrowse
 Plug 'airblade/vim-gitgutter' " Show git diff in the sign column
+
 Plug 'scrooloose/nerdtree'
-" Install FZF system wide
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" FZF for vim
-Plug 'junegunn/fzf.vim'
-"
+
 " Language specific libraries
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 " Basic libraries for all(most) languages
