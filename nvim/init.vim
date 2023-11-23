@@ -100,19 +100,19 @@ end)
 
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
-lsp.format_on_save({
-  format_opts = {
-    async = false,
-    timeout_ms = 10000,
-  },
-  servers = {
-    ['solargraph'] = { 'ruby' },
-  }
-})
-
 lsp.setup()
+
+local function quickfix()
+    vim.lsp.buf.code_action({
+        filter = function(a) return a.isPreferred end,
+        apply = true
+    })
+end
+vim.keymap.set('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap=true, silent=true })
 EOF
+
+lua require('plugins')
+
 
 " Configure nvim-dap
 lua <<EOF
