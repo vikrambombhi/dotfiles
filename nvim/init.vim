@@ -26,11 +26,6 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
 Plug 'nvim-lua/plenary.nvim' " All the lua functions I don't want to write twice.
 
-" Debugging
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'mfussenegger/nvim-dap-python'
-
 " Treesitter for better highlighting 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -85,12 +80,6 @@ colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchia
 set termguicolors
 set laststatus=2
 
-" Dont use copolot for dap-repl
-let g:copilot_filetypes = {
-            \ 'dap-repl': v:false,
-            \ }
-
-
 lua <<EOF
 local lsp = require('lsp-zero').preset({})
 
@@ -112,52 +101,3 @@ vim.keymap.set('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', { no
 EOF
 
 lua require('plugins')
-
-
-" Configure nvim-dap
-lua <<EOF
-vim.keymap.set('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>')
-vim.keymap.set('n', '<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-vim.keymap.set('n', '<leader>ds', '<cmd>lua require"dap".step_over()<CR>')
-vim.keymap.set('n', '<leader>di', '<cmd>lua require"dap".step_into()<CR>')
-vim.keymap.set('n', '<leader>do', '<cmd>lua require"dap".step_out()<CR>')
-vim.keymap.set('n', '<leader>dq', '<cmd>lua require"dap".disconnect()<CR>')
--- nvim-dap-python
-require('dap-python').setup('python')
--- nvim-dap-ui
-local dapui_config = {
-    layouts = {
-        {
-                elements = {
-                    {
-                            id = "scopes",
-                            size = 0.25,
-                    },
-                    { id = "breakpoints", size = 0.25 },
-                    { id = "stacks", size = 0.25 },
-                    { id = "watches", size = 0.25 },
-                },
-                size = 40,
-                position = "left",
-                },
-        {
-                elements = {
-                    "repl",
-                },
-                size = 10,
-                position = "bottom",
-        },
-        },
-}
-require('dapui').setup(dapui_config)
-local dap, dapui = require("dap"), require("dapui")
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
-end
-EOF
