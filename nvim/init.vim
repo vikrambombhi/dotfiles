@@ -9,20 +9,9 @@ Plug 'scrooloose/nerdtree'
 " Language specific libraries
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 " Basic libraries for all(most) languages
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 " Edit surrounding braces/quotes/etc...
 Plug 'tpope/vim-surround'
-
-" LSP Support using lsp-zero
-Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
-Plug 'williamboman/mason-lspconfig.nvim'               " Optional
-Plug 'neovim/nvim-lspconfig'                           " Required
-" Autocompletion
-Plug 'hrsh7th/nvim-cmp'     " Required
-Plug 'hrsh7th/cmp-nvim-lsp' " Required
-Plug 'L3MON4D3/LuaSnip'     " Required
-
-Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
 Plug 'nvim-lua/plenary.nvim' " All the lua functions I don't want to write twice.
 
@@ -79,25 +68,5 @@ au FileType qf wincmd J
 colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 set termguicolors
 set laststatus=2
-
-lua <<EOF
-local lsp = require('lsp-zero').preset({})
-
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-lsp.setup()
-
-local function quickfix()
-    vim.lsp.buf.code_action({
-        filter = function(a) return a.isPreferred end,
-        apply = true
-    })
-end
-vim.keymap.set('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap=true, silent=true })
-EOF
 
 lua require('plugins')
