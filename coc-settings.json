@@ -1,4 +1,0 @@
-{
-  "coc.preferences.formatOnSaveFiletypes": ["prisma"],
-  "coc.preferences.diagnostic.displayByAle": true
-}
