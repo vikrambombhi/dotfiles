@@ -34,7 +34,9 @@ fi
 # Set configs
 if [ ! -f ~/.config ]; then
 	echo "Linking configs"
-	ln -s $dir/config/ ~/.config
+	ln -s $dir/nvim/ ~/.config/nvim
+	ln -s $dir/tmux/ ~/.config/tmux
+	ln -s $dir/alacritty.toml ~/.config/alacritty.toml
 fi
 
 
