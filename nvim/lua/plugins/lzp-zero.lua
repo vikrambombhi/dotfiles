@@ -80,6 +80,23 @@ return {
           function(server_name)
             require('lspconfig')[server_name].setup({})
           end,
+          ['yamlls'] = function()
+            require('lspconfig').yamlls.setup({
+              settings = {
+                yaml = {
+                  schemas = {
+                    -- The token in these urls expire. Go to these urls to get the new token
+                    -- https://github.com/dialoguemd/charts/raw/master/app/schema.json
+                    -- https://github.com/dialoguemd/charts/raw/master/job/schema.json
+                    ["/Users/vikram/dev/charts/app/schema.json"] = "app.yaml",
+                    ["/Users/vikram/dev/charts/app/schema.json"] = "app.yml",
+                    ["/Users/vikram/dev/charts/job/schema.json"] = "job.yaml",
+                    ["/Users/vikram/dev/charts/job/schema.json"] = "job.yml",
+                  },
+                },
+              }
+            })
+          end
         }
       })
     end
