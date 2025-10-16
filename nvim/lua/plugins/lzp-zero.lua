@@ -106,10 +106,11 @@ return {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
           function(server_name)
-            require('lspconfig')[server_name].setup({})
+            vim.lsp.config(server_name, {})
+            vim.lsp.enable(server_name)
           end,
           ['yamlls'] = function()
-            require('lspconfig').yamlls.setup({
+            vim.lsp.config('yamlls', {
               settings = {
                 yaml = {
                   schemas = {
@@ -124,6 +125,7 @@ return {
                 },
               }
             })
+            vim.lsp.enable('yamlls')
           end
         }
       })
