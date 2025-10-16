@@ -64,16 +64,44 @@ return {
       local lsp_zero = require('lsp-zero')
       lsp_zero.extend_lspconfig()
 
+
+      -- Configure diagnostic signs
+      local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "»" }
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+
+      -- Configure diagnostics to show inline
+      vim.diagnostic.config({
+        virtual_text = true,        -- Show diagnostic messages inline
+        signs = true,               -- Show diagnostic signs in the gutter
+        underline = true,           -- Underline problematic code
+        update_in_insert = false,   -- Don't update diagnostics while typing
+        severity_sort = true,       -- Sort by severity
+        float = {
+          border = 'rounded',       -- Rounded border for floating windows
+          source = 'always',        -- Always show the source
+          header = '',
+          prefix = '',
+        },
+      })
+
+
       --- if you want to know more about lsp-zero and mason.nvim
       --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
       lsp_zero.on_attach(function(client, bufnr)
         -- see :help lsp-zero-keybindings
         -- to learn the available actions
         lsp_zero.default_keymaps({buffer = bufnr})
+
+        -- Additional keymaps for diagnostics
+        local opts = {buffer = bufnr}
+        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
       end)
 
       require('mason-lspconfig').setup({
-        ensure_installed = {'pyright'},
+        ensure_installed = {'pyright', 'ts_ls', 'gopls'},
         handlers = {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
