@@ -24,9 +24,9 @@ if [ ! $(bash -c "command -v rg") ]; then
 	exit
 fi
 
-if [ ! -f ~/.tmux/plugins/tpm/tpm ]; then
+if [ ! -f ~/.config/tmux/plugins/tpm/tpm ]; then
 	echo "Installing tpm"
-	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 	echo "Remember to press prefix + I (capital i, as in Install) to install plugins"
 fi
 
