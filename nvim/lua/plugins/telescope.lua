@@ -15,6 +15,12 @@ return {
 			end
 		end
 
+		require('telescope').setup({
+			defaults = {
+				layout_strategy = "vertical",
+				wrap_results = true,
+			},
+		})
 
 		local builtin = require('telescope.builtin')
 		vim.keymap.set('n', '<Leader>F', builtin.find_files, {})
