@@ -102,7 +102,7 @@ return {
       require('mason-lspconfig').setup({
         -- ensure_installed = {'pyright', 'ts_ls', 'gopls'},
         ensure_installed = {
-          'kotlin_lsp',
+          -- 'kotlin_lsp',
           'ty',
           -- 'kotlin-language-server',
           'protols'
