@@ -11,6 +11,7 @@ mkdir -p ~/dev/
 # - tmux
 # - nvim
 # - ripgrep
+# - tree-sitter (CLI, required by nvim-treesitter)
 if [ ! $(bash -c "command -v tmux") ]; then
 	echo "Error: tmux should already be installed" >> /dev/stderr
 	exit
@@ -21,6 +22,10 @@ if [ ! $(bash -c "command -v nvim") ]; then
 fi
 if [ ! $(bash -c "command -v rg") ]; then
 	echo "Error: ripgrep should already be installed" >> /dev/stderr
+	exit
+fi
+if [ ! $(bash -c "command -v tree-sitter") ]; then
+	echo "Error: tree-sitter CLI should already be installed (brew install tree-sitter-cli)" >> /dev/stderr
 	exit
 fi
 
