@@ -1,13 +1,6 @@
-require("config.lazy")
-
+-- Leader keys must be set before any plugin loads so mappings register correctly.
 vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
--- Use system clipboard
--- set clipboard=unnamedplus
--- set clipboard+=unnamedplus
-vim.opt.clipboard = 'unnamedplus'
-
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.bo.softtabstop = 2
-vim.opt.expandtab = true
+require('config.options')
+require('config.pack')
