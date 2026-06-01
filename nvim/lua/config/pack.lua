@@ -35,7 +35,6 @@ vim.pack.add({
   -- LSP: native vim.lsp.config/enable + nvim-lspconfig defaults, servers via mason
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/mason-org/mason.nvim' },
-  { src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
 
   -- Completion (pinned to a 1.x release tag so the prebuilt fuzzy binary is used)
   { src = 'https://github.com/Saghen/blink.cmp', version = vim.version.range('1') },
