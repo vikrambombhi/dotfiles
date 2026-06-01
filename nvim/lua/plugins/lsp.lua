@@ -12,10 +12,11 @@
 -- SERVERS below), and enable them explicitly here. Manage servers via `:Mason`.
 
 -- Language servers to enable. Install the binaries once with:
---   :MasonInstall ty protols
+--   :MasonInstall ty protols gopls
 local SERVERS = {
   'ty',      -- Python (Astral)
   'protols', -- Protobuf
+  'gopls',   -- Go
 }
 
 -- Diagnostics appearance.
