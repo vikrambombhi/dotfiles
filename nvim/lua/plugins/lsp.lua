@@ -25,21 +25,6 @@ vim.lsp.config('*', {
   capabilities = require('blink.cmp').get_lsp_capabilities(),
 })
 
--- Per-server overrides (merged onto nvim-lspconfig's defaults).
-vim.lsp.config('yamlls', {
-  settings = {
-    yaml = {
-      schemas = {
-        -- The token in these URLs expires; refresh from:
-        --   https://github.com/dialoguemd/charts/raw/master/app/schema.json
-        --   https://github.com/dialoguemd/charts/raw/master/job/schema.json
-        ['/Users/vikram/dev/charts/app/schema.json'] = { 'app.yaml', 'app.yml' },
-        ['/Users/vikram/dev/charts/job/schema.json'] = { 'job.yaml', 'job.yml' },
-      },
-    },
-  },
-})
-
 -- Install servers and let mason-lspconfig auto-enable them.
 require('mason').setup()
 require('mason-lspconfig').setup({
