@@ -6,10 +6,14 @@
 # nothing when the branch has no PR, so the module disappears entirely.
 #
 # A single `gh pr list` call fetches ALL of my PRs in the repo at once and
-# caches "branch <TAB> number <TAB> state <TAB> isDraft" lines. The status line
-# just looks up the current branch in that cache, so switching branches is
-# instant and there is no per-branch network call. The cache is refreshed in
-# the background.
+# caches one TSV line per PR:
+#   branch  number  state  isDraft  pass  fail  running  url
+# The status line just looks up the current branch in that cache, so switching
+# branches is instant and there is no per-branch network call. The cache is
+# refreshed in the background.
+#
+# Modes: `--refresh` force-refetches this repo; `--open` opens the current
+# branch's PR in the browser.
 
 set -u
 
@@ -34,7 +38,7 @@ cache_file="$cache_dir/$key"
 refresh() {
   command -v gh >/dev/null 2>&1 || return
   (cd "$repo" && gh pr list --author "@me" --state all --limit 200 \
-     --json number,headRefName,state,isDraft,statusCheckRollup \
+     --json number,headRefName,state,isDraft,statusCheckRollup,url \
      --jq '
        .[] |
        ( [ .statusCheckRollup[] |
@@ -50,15 +54,51 @@ refresh() {
        [ .headRefName, .number, .state, .isDraft,
          ([$c[] | select(. == "P")] | length),
          ([$c[] | select(. == "F")] | length),
-         ([$c[] | select(. == "R")] | length) ] | @tsv' 2>/dev/null) \
+         ([$c[] | select(. == "R")] | length),
+         .url ] | @tsv' 2>/dev/null) \
        >"$cache_file.tmp" 2>/dev/null &&
     mv -f "$cache_file.tmp" "$cache_file" 2>/dev/null
+}
+
+# Pick the most relevant PR for the current branch: prefer open > draft >
+# merged > closed, breaking ties by the highest (most recent) PR number. Prints
+# "status number pass fail running url" (single line) or nothing.
+select_pr() {
+  [ -f "$cache_file" ] || return
+  awk -F '\t' -v b="$branch" '
+    $1 == b {
+      n = $2; st = $3; dr = $4
+      if      (st == "OPEN" && dr == "true") { rank = 1; s = "draft"  }
+      else if (st == "OPEN")                 { rank = 0; s = "open"   }
+      else if (st == "MERGED")               { rank = 2; s = "merged" }
+      else                                   { rank = 3; s = "closed" }
+      if (!have || rank < brank || (rank == brank && n + 0 > bn + 0)) {
+        bs = s; brank = rank; bn = n; bp = $5; bf = $6; brun = $7; burl = $8; have = 1
+      }
+    }
+    END { if (have) print bs, bn, bp + 0, bf + 0, brun + 0, burl }
+  ' "$cache_file"
 }
 
 # `--refresh` (e.g. from a key binding) forces a synchronous refetch of this
 # repo, bypassing the TTL, then exits. The caller redraws the status afterward.
 if [ "${1:-}" = "--refresh" ] || [ "${1:-}" = "-r" ]; then
   refresh
+  exit 0
+fi
+
+# `--open` opens the current branch's PR in the browser (used by the status-bar
+# mouse binding). Falls back to a synchronous refresh if the URL isn't cached.
+if [ "${1:-}" = "--open" ] || [ "${1:-}" = "-o" ]; then
+  read -r _ _ _ _ _ url < <(select_pr)
+  if [ -z "${url:-}" ]; then
+    refresh
+    read -r _ _ _ _ _ url < <(select_pr)
+  fi
+  if [ -n "${url:-}" ]; then
+    opener="$(command -v open || command -v xdg-open)"
+    [ -n "$opener" ] && "$opener" "$url" >/dev/null 2>&1
+  fi
   exit 0
 fi
 
@@ -71,22 +111,7 @@ fi
 
 [ -f "$cache_file" ] || exit 0
 
-# Pick the most relevant PR for this branch: prefer open > draft > merged >
-# closed, breaking ties by the highest (most recent) PR number. Carry that PR's
-# CI job counts (pass/fail/running) through to the output.
-read -r status num pass fail running < <(awk -F '\t' -v b="$branch" '
-  $1 == b {
-    n = $2; st = $3; dr = $4
-    if      (st == "OPEN" && dr == "true") { rank = 1; s = "draft"  }
-    else if (st == "OPEN")                 { rank = 0; s = "open"   }
-    else if (st == "MERGED")               { rank = 2; s = "merged" }
-    else                                   { rank = 3; s = "closed" }
-    if (!have || rank < brank || (rank == brank && n + 0 > bn + 0)) {
-      bs = s; brank = rank; bn = n; bp = $5; bf = $6; brun = $7; have = 1
-    }
-  }
-  END { if (have) print bs, bn, bp + 0, bf + 0, brun + 0 }
-' "$cache_file")
+read -r status num pass fail running url < <(select_pr)
 [ -n "${num:-}" ] || exit 0
 
 color="$(tmux show-option -gqv "@_catppuccin_git_pr_color_$status")"

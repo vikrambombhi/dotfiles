@@ -32,5 +32,8 @@ show_git_pr() {
   local script_dir
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-  echo "#($script_dir/git_pr_status.sh)"
+  # Wrap the segment in a named click range (tmux 3.4+) so a status-line mouse
+  # binding can open the PR only when this exact pill is clicked. The range is
+  # zero-width (unclickable) when the helper prints nothing for a no-PR branch.
+  echo "#[range=user|pr]#($script_dir/git_pr_status.sh)#[norange]"
 }
