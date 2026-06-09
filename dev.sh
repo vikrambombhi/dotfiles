@@ -22,3 +22,30 @@ function dev() {
         echo "$DIR_PATH does not exist"
     fi
 }
+
+# Completion: offer the directory names under ~/dev and ~/Projects
+function _dev_dirs() {
+    local d
+    for d in "$HOME/dev"/*/ "$HOME/Projects"/*/; do
+        [ -d "$d" ] && basename "$d"
+    done
+}
+
+if [ -n "$ZSH_VERSION" ]; then
+    function _dev() {
+        local -a names
+        names=( ${(f)"$(_dev_dirs)"} )
+        compadd -a names
+    }
+    # Ensure the completion system is loaded before registering.
+    if ! whence compdef >/dev/null 2>&1; then
+        autoload -Uz compinit && compinit -u
+    fi
+    compdef _dev dev
+elif [ -n "$BASH_VERSION" ]; then
+    function _dev() {
+        local cur="${COMP_WORDS[COMP_CWORD]}"
+        COMPREPLY=( $(compgen -W "$(_dev_dirs)" -- "$cur") )
+    }
+    complete -F _dev dev
+fi
