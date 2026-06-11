@@ -34,7 +34,11 @@ function _dev_dirs() {
 if [ -n "$ZSH_VERSION" ]; then
     function _dev() {
         local -a names
-        names=( ${(f)"$(_dev_dirs)"} )
+        local line
+        # Read one dir name per line. A while-read loop avoids zsh-only
+        # expansion syntax (e.g. ${(f)...}), which keeps this file parseable
+        # by the bash treesitter grammar so .sh highlighting stays intact.
+        while IFS= read -r line; do names+=("$line"); done < <(_dev_dirs)
         compadd -a names
     }
     # Ensure the completion system is loaded before registering.
