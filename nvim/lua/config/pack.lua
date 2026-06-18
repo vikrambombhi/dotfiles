@@ -47,6 +47,9 @@ vim.pack.add({
   -- Editing UI
   { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
   { src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim' },
+
+  -- CSV
+  { src = 'https://github.com/hat0uma/csvview.nvim' },
 })
 
 -- Configure plugins. Order matters: colors first, then treesitter (consumed by
@@ -61,5 +64,6 @@ require('plugins.lsp')
 require('plugins.gitsigns')
 require('plugins.indent-blankline')
 require('plugins.render-markdown')
+require('plugins.csvview')
 
 -- vim-fugitive / vim-rhubarb need no setup; loading them via vim.pack is enough.
