@@ -16,6 +16,15 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
+-- telescope-fzf-native requires a compiled C extension; build it on install/update.
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    if ev.data.spec.name ~= 'telescope-fzf-native.nvim' then return end
+    if ev.data.kind ~= 'install' and ev.data.kind ~= 'update' then return end
+    vim.fn.jobstart('make', { cwd = ev.data.spec.path })
+  end,
+})
+
 vim.pack.add({
   -- Colorscheme
   { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
@@ -31,6 +40,7 @@ vim.pack.add({
   -- Fuzzy finder
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
   { src = 'https://github.com/nvim-telescope/telescope.nvim' },
+  { src = 'https://github.com/nvim-telescope/telescope-fzf-native.nvim' },
 
   -- LSP: native vim.lsp.config/enable + nvim-lspconfig defaults, servers via mason
   { src = 'https://github.com/neovim/nvim-lspconfig' },

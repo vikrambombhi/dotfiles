@@ -16,7 +16,12 @@ require('telescope').setup({
     layout_strategy = 'vertical',
     wrap_results = true,
   },
+  extensions = {
+    fzf = {},
+  },
 })
+
+pcall(require('telescope').load_extension, 'fzf')
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<Leader>F', builtin.find_files, {})
